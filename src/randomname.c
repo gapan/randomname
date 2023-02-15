@@ -106,7 +106,6 @@ int main(int argc, char** argv) {
                 usage();
                 return 0;
             case 'l':
-                fprintf(stdout, "Left: %s\n", optarg);
                 if (strcmp(optarg, "none") == 0) left = LEFT_NONE;
                 else if (strcmp(optarg, "adjective") == 0) left = LEFT_ADJECTIVE;
                 else if (strcmp(optarg, "color") == 0) left = LEFT_COLOR;
@@ -116,7 +115,6 @@ int main(int argc, char** argv) {
                 }
                 break;
             case 'm':
-                fprintf(stdout, "Middle: %s\n", optarg);
                 if (strcmp(optarg, "none") == 0) left = MIDDLE_NONE;
                 else if (strcmp(optarg, "adjective") == 0) left = MIDDLE_ADJECTIVE;
                 else if (strcmp(optarg, "color") == 0) left = MIDDLE_COLOR;
@@ -126,10 +124,10 @@ int main(int argc, char** argv) {
                 }
                 break;
             case 'r':
-                fprintf(stdout, "Right: %s\n", optarg);
                 if (strcmp(optarg, "none") == 0) right = RIGHT_NONE;
                 else if (strcmp(optarg, "animal") == 0) right = RIGHT_ANIMAL;
                 else if (strcmp(optarg, "noun") == 0) right = RIGHT_NOUN;
+                else if (strcmp(optarg, "person") == 0) right = RIGHT_PERSON;
                 else {
                     usage();
                     exit(EXIT_FAILURE);
@@ -155,8 +153,17 @@ int main(int argc, char** argv) {
         }
     } while (next_opt != -1);
 
-    printf("ubuntu flag: %d\n", ubuntu_flag);
-    printf("docker flag: %d\n", docker_flag);
+    if (ubuntu_flag == 0) {
+        left = LEFT_ADJECTIVE;
+        middle = MIDDLE_NONE;
+        right = RIGHT_ANIMAL;
+    }
+    if (docker_flag == 0) {
+        left = LEFT_ADJECTIVE;
+        middle = MIDDLE_NONE;
+        right = RIGHT_PERSON;
+        separator = '_';
+    }
     printf("LS: %d, MS %d, RS: %d\n", left_start, middle_start, right_start);
 
     srand(time(NULL)); // random seed

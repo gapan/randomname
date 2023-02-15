@@ -15,7 +15,8 @@ enum random_middle {
 enum random_right {
     RIGHT_NONE = 0,
     RIGHT_ANIMAL,
-    RIGHT_NOUN
+    RIGHT_NOUN,
+    RIGHT_PERSON
 };
 
 // return random number between min and max (both inclusive)
