@@ -19,6 +19,12 @@ enum random_right {
     RIGHT_PERSON
 };
 
+enum random_preset {
+    PRESET_NONE = 0,
+    PRESET_DOCKER,
+    PRESET_UBUNTU
+};
+
 // return random number between min and max (both inclusive)
 int random_number(int min, int max);
 
