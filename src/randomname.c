@@ -75,7 +75,7 @@ int main(int argc, char** argv) {
                             left_start = argv[optind][0];
                             right_start = argv[optind][0];
                         } else {
-                            // invalid parameter
+                            // invalid argument
                             fprintf(stderr, "ERROR: Invalid argument (%s)\n\n", argv[optind]);
                             usage();
                             exit(EXIT_FAILURE);
@@ -86,7 +86,7 @@ int main(int argc, char** argv) {
                     if (strlen(optarg) == 1 && optarg[0] >= 'a' && optarg[0] <= 'z') {
                         left_start = optarg[0];
                     } else {
-                        // invalid parameter
+                        // invalid argument
                         fprintf(stderr, "ERROR: Invalid argument (%s)\n\n", optarg);
                         usage();
                         exit(EXIT_FAILURE);
@@ -95,7 +95,7 @@ int main(int argc, char** argv) {
                     if (strlen(optarg) == 1 && optarg[0] >= 'a' && optarg[0] <= 'z') {
                         middle_start = optarg[0];
                     } else {
-                        // invalid parameter
+                        // invalid argument
                         fprintf(stderr, "ERROR: Invalid argument (%s)\n\n", optarg);
                         usage();
                         exit(EXIT_FAILURE);
@@ -104,7 +104,7 @@ int main(int argc, char** argv) {
                     if (strlen(optarg) == 1 && optarg[0] >= 'a' && optarg[0] <= 'z') {
                         right_start = optarg[0];
                     } else {
-                        // invalid parameter
+                        // invalid argument
                         fprintf(stderr, "ERROR: Invalid argument (%s)\n\n", optarg);
                         usage();
                         exit(EXIT_FAILURE);
