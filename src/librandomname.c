@@ -1,6 +1,10 @@
 // vim:et:sta:sts=4:sw=4:ts=8:tw=79:
 
 #include <stdlib.h>
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+#include "librandomname.h"
 #include "adjectives.h"
 #include "animals.h"
 #include "colors.h"
@@ -12,32 +16,131 @@ static int random_number(int min, int max) {
     return rand() % (max + 1 - min) + min;
 }
 
-char *randomname_adjective() {
-    int len_adjectives = sizeof(adjectives) / sizeof(adjectives[0]);
-    int rand = random_number(0, len_adjectives - 1);
-    return adjectives[rand];
+static bool includes_dash(char *s) {
+    bool found_dash = false;
+    int len = strlen(s);
+    for (int i = 0; i < len; ++i) {
+        if (s[i] == '-') {
+            found_dash = true;
+            break;
+        }
+    }
+    return found_dash;
 }
 
-char *randomname_animal() {
-    int len_animals = sizeof(animals) / sizeof(animals[0]);
-    int rand = random_number(0, len_animals - 1);
-    return animals[rand];
+static char *random_item_opts(char **list, int len, char first_char, bool no_dashes) {
+    int start = 0;
+    int end = len - 1;
+    bool found_start = false;
+    if (first_char && first_char >= 'a' && first_char <= 'z') {
+        for (int i = 0; i < len; ++i) {
+            if (!found_start && list[i][0] == first_char) {
+                start = i;
+                found_start = true;
+            }
+            if (found_start && list[i][0] != first_char) {
+                end = i - 1;
+                break;
+            }
+        }
+    }
+    int rand;
+    do {
+        rand = random_number(start, end);
+    } while (no_dashes && no_dashes == true && includes_dash(list[rand]));
+    return list[rand];
 }
 
-char *randomname_color() {
-    int len_colors = sizeof(colors) / sizeof(colors[0]);
-    int rand = random_number(0, len_colors - 1);
-    return colors[rand];
+static char *random_item(char **list, int len) {
+    return random_item_opts(list, len, 0, false);
 }
 
-char *randomname_notable_person() {
-    int len_notable_people = sizeof(notable_people) / sizeof(notable_people[0]);
-    int rand = random_number(0, len_notable_people - 1);
-    return notable_people[rand];
+char *randomname() {
+    return randomname_opts(RANDOM_ADJECTIVE, RANDOM_NONE, RANDOM_NOUN, 0, 0, 0, '-', false);
 }
 
-char *randomname_noun() {
-    int len_nouns = sizeof(nouns) / sizeof(nouns[0]);
-    int rand = random_number(0, len_nouns - 1);
-    return nouns[rand];
+char *randomname_opts(randomname_category_t left_category,
+                      randomname_category_t middle_category,
+                      randomname_category_t right_category,
+                      char first_char_left,
+                      char first_char_middle,
+                      char first_char_right,
+                      char separator,
+                      bool no_dashes) {
+    char *left = randomname_by_category_opts(left_category, first_char_left, no_dashes);
+    char *middle = randomname_by_category_opts(middle_category, first_char_middle, no_dashes);
+    char *right = randomname_by_category_opts(right_category, first_char_right, no_dashes);
+    char *name;
+    if (left && middle && right) {
+        name = malloc(strlen(left) + strlen(middle) + strlen(right) + 3);
+        sprintf(name, "%s%c%s%c%s", left, separator, middle, separator, right);
+    } else if (left && right) {
+        name = malloc(strlen(left) + strlen(right) + 2);
+        sprintf(name, "%s%c%s", left, separator, right);
+    } else if (middle && right) {
+        name = malloc(strlen(middle) + strlen(right) + 2);
+        sprintf(name, "%s%c%s", middle, separator, right);
+    } else if (left && middle) {
+        name = malloc(strlen(left) + strlen(middle) + 2);
+        sprintf(name, "%s%c%s", left, separator, middle);
+    } else if (left) {
+        return left;
+    } else if (middle) {
+        return middle;
+    } else if (right) {
+        return right;
+    }
+    return name;
 }
+
+char *randomname_by_category(randomname_category_t c) {
+    return randomname_by_category_opts(c, 0, false);
+}
+
+char *randomname_by_category_opts(randomname_category_t c, char first_char, bool no_dashes) {
+    int len;
+    if (c == RANDOM_ADJECTIVE) {
+        len = sizeof(adjectives) / sizeof(adjectives[0]);
+        return random_item_opts(adjectives, len, first_char, no_dashes);
+    } else if (c == RANDOM_ANIMAL) {
+        len = sizeof(animals) / sizeof(animals[0]);
+        return random_item_opts(animals, len, first_char, no_dashes);
+    } else if (c == RANDOM_COLOR) {
+        len = sizeof(colors) / sizeof(colors[0]);
+        return random_item_opts(colors, len, first_char, no_dashes);
+    } else if (c == RANDOM_NOTABLE_PERSON) {
+        len = sizeof(notable_people) / sizeof(notable_people[0]);
+        return random_item_opts(notable_people, len, first_char, no_dashes);
+    } else if (c == RANDOM_NOUN) {
+        len = sizeof(nouns) / sizeof(nouns[0]);
+        return random_item_opts(nouns, len, first_char, no_dashes);
+    }
+    return NULL;
+}
+
+char *randomname_docker() {
+    char *name;
+    /* Steve Wozniak is not boring
+     * just mirroring what docker does. See:
+     * https://github.com/moby/moby/blob/master/pkg/namesgenerator/names-generator.go
+     */
+    do {
+        char *left = randomname_by_category_opts(RANDOM_ADJECTIVE, 0, true);
+        char *right = randomname_by_category_opts(RANDOM_NOTABLE_PERSON, 0, true);
+        name = malloc(strlen(left) + strlen(right) + 2);
+        sprintf(name, "%s_%s", left, right);
+    } while (strcmp(name, "boring_wozniak") == 0);
+    return name;
+}
+
+char *randomname_ubuntu(char first_char) {
+    if (first_char < 'a' || first_char > 'z') {
+        first_char = random_number('a', 'z');
+    }
+    char *left = randomname_by_category_opts(RANDOM_ADJECTIVE, first_char, true);
+    char *right = randomname_by_category_opts(RANDOM_ANIMAL, first_char, true);
+    char *name = malloc(strlen(left) + strlen(right) + 2);
+    sprintf(name, "%s-%s", left, right);
+    return name;
+}
+

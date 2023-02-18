@@ -1,36 +1,28 @@
 // vim:et:sta:sts=4:sw=4:ts=8:tw=79:
 
-enum random_left {
-    LEFT_NONE = 0,
-    LEFT_ADJECTIVE,
-    LEFT_COLOR
-};
+#include <stdbool.h>
 
-enum random_middle {
-    MIDDLE_NONE = 0,
-    MIDDLE_ADJECTIVE,
-    MIDDLE_COLOR 
-};
+typedef enum {
+    RANDOM_NONE = 0,
+    RANDOM_ADJECTIVE,
+    RANDOM_ANIMAL,
+    RANDOM_COLOR,
+    RANDOM_NOTABLE_PERSON,
+    RANDOM_NOUN
+} randomname_category_t;
 
-enum random_right {
-    RIGHT_NONE = 0,
-    RIGHT_ANIMAL,
-    RIGHT_NOUN,
-    RIGHT_PERSON
-};
+char *randomname();
+char *randomname_opts(randomname_category_t left_category,
+                      randomname_category_t middle_category,
+                      randomname_category_t right_category,
+                      char first_char_left,
+                      char middle_start,
+                      char right_start,
+                      char separator,
+                      bool no_dashes);
 
-enum random_preset {
-    PRESET_NONE = 0,
-    PRESET_DOCKER,
-    PRESET_UBUNTU
-};
+char *randomname_by_category(randomname_category_t c);
+char *randomname_by_category_opts(randomname_category_t c, char first_char, bool no_dashes);
 
-// return random number between min and max (both inclusive)
-int random_number(int min, int max);
-
-char *randomname_adjective();
-char *randomname_animal();
-char *randomname_color();
-char *randomname_notable_person();
-char *randomname_noun();
-
+char *randomname_docker();
+char *randomname_ubuntu(char first_char);

@@ -20,18 +20,18 @@ int main(int argc, char** argv) {
     int right_flag = 0;
 
     // 0 means that names could start with any letter
-    char left_start = 0;
-    char middle_start = 0;
-    char right_start = 0;
+    char first_char_left = 0;
+    char first_char_middle = 0;
+    char first_char_right = 0;
 
     // flagged (value = 0) if the respective option is enabled
     int ubuntu_flag = 1;
     int docker_flag = 1;
     int no_dashes_flag = 1;
 
-    enum random_left left = LEFT_ADJECTIVE;
-    enum random_middle middle = MIDDLE_NONE;
-    enum random_right right = RIGHT_NOUN;
+    randomname_category_t left_category = RANDOM_ADJECTIVE;
+    randomname_category_t middle_category = RANDOM_NONE;
+    randomname_category_t right_category = RANDOM_NOUN;
 
     char separator = '-';
 
@@ -72,8 +72,8 @@ int main(int argc, char** argv) {
                     if (argv[optind]) {
                         if (argv[optind][0] == '-'); // next arg is an option
                         else if (strlen(argv[optind]) == 1 && argv[optind][0] >= 'a' && argv[optind][0] <= 'z') {
-                            left_start = argv[optind][0];
-                            right_start = argv[optind][0];
+                            first_char_left = argv[optind][0];
+                            first_char_right = argv[optind][0];
                         } else {
                             // invalid argument
                             fprintf(stderr, "ERROR: Invalid argument (%s)\n\n", argv[optind]);
@@ -84,7 +84,7 @@ int main(int argc, char** argv) {
                     }
                 } else if (strcmp(argv[optind-2], "--left-start") == 0) {
                     if (strlen(optarg) == 1 && optarg[0] >= 'a' && optarg[0] <= 'z') {
-                        left_start = optarg[0];
+                        first_char_left = optarg[0];
                     } else {
                         // invalid argument
                         fprintf(stderr, "ERROR: Invalid argument (%s)\n\n", optarg);
@@ -93,7 +93,7 @@ int main(int argc, char** argv) {
                     }
                 } else if (strcmp(argv[optind-2], "--middle-start") == 0) {
                     if (strlen(optarg) == 1 && optarg[0] >= 'a' && optarg[0] <= 'z') {
-                        middle_start = optarg[0];
+                        first_char_middle = optarg[0];
                     } else {
                         // invalid argument
                         fprintf(stderr, "ERROR: Invalid argument (%s)\n\n", optarg);
@@ -102,7 +102,7 @@ int main(int argc, char** argv) {
                     }
                 } else if (strcmp(argv[optind-2], "--right-start") == 0) {
                     if (strlen(optarg) == 1 && optarg[0] >= 'a' && optarg[0] <= 'z') {
-                        right_start = optarg[0];
+                        first_char_right = optarg[0];
                     } else {
                         // invalid argument
                         fprintf(stderr, "ERROR: Invalid argument (%s)\n\n", optarg);
@@ -120,28 +120,28 @@ int main(int argc, char** argv) {
                 usage();
                 return 0;
             case 'l':
-                if (strcmp(optarg, "none") == 0) left = LEFT_NONE;
-                else if (strcmp(optarg, "adjective") == 0) left = LEFT_ADJECTIVE;
-                else if (strcmp(optarg, "color") == 0) left = LEFT_COLOR;
+                if (strcmp(optarg, "none") == 0) left_category = RANDOM_NONE;
+                else if (strcmp(optarg, "adjective") == 0) left_category = RANDOM_ADJECTIVE;
+                else if (strcmp(optarg, "color") == 0) left_category = RANDOM_COLOR;
                 else {
                     usage();
                     exit(EXIT_FAILURE);
                 }
                 break;
             case 'm':
-                if (strcmp(optarg, "none") == 0) left = MIDDLE_NONE;
-                else if (strcmp(optarg, "adjective") == 0) left = MIDDLE_ADJECTIVE;
-                else if (strcmp(optarg, "color") == 0) left = MIDDLE_COLOR;
+                if (strcmp(optarg, "none") == 0) middle_category = RANDOM_NONE;
+                else if (strcmp(optarg, "adjective") == 0) middle_category = RANDOM_ADJECTIVE;
+                else if (strcmp(optarg, "color") == 0) middle_category = RANDOM_COLOR;
                 else {
                     usage();
                     exit(EXIT_FAILURE);
                 }
                 break;
             case 'r':
-                if (strcmp(optarg, "none") == 0) right = RIGHT_NONE;
-                else if (strcmp(optarg, "animal") == 0) right = RIGHT_ANIMAL;
-                else if (strcmp(optarg, "noun") == 0) right = RIGHT_NOUN;
-                else if (strcmp(optarg, "person") == 0) right = RIGHT_PERSON;
+                if (strcmp(optarg, "none") == 0) right_category = RANDOM_NONE;
+                else if (strcmp(optarg, "animal") == 0) right_category = RANDOM_ANIMAL;
+                else if (strcmp(optarg, "noun") == 0) right_category = RANDOM_NOUN;
+                else if (strcmp(optarg, "person") == 0) right_category = RANDOM_NOTABLE_PERSON;
                 else {
                     usage();
                     exit(EXIT_FAILURE);
@@ -167,25 +167,20 @@ int main(int argc, char** argv) {
         }
     } while (next_opt != -1);
 
-    if (ubuntu_flag == 0) {
-        left = LEFT_ADJECTIVE;
-        middle = MIDDLE_NONE;
-        right = RIGHT_ANIMAL;
-    }
-    if (docker_flag == 0) {
-        left = LEFT_ADJECTIVE;
-        middle = MIDDLE_NONE;
-        right = RIGHT_PERSON;
-        separator = '_';
-    }
-    printf("LS: %d, MS %d, RS: %d\n", left_start, middle_start, right_start);
-
     srand(time(NULL)); // random seed
 
-    char *left_string = randomname_adjective();
-    char *right_string = randomname_animal();
+    if (docker_flag == 0) {
+        fprintf(stdout, "%s\n", randomname_docker());
+    }
+    if (ubuntu_flag == 0) {
+        fprintf(stdout, "%s\n", randomname_ubuntu(first_char_left));
+        return 0;
+    }
 
-    printf("%s-%s\n", left_string, right_string);
-    
+    char *name = randomname_opts(left_category, middle_category, right_category,
+            first_char_left, first_char_middle, first_char_right,
+            separator, !no_dashes_flag);
+    fprintf(stdout, "%s\n", name);
+
     return 0;
 }
