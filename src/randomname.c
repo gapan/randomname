@@ -117,7 +117,7 @@ int main(int argc, char** argv) {
                 break;
             case 'h': // User requested help
                 usage();
-                return 0;
+                exit(EXIT_SUCCESS);
             case 'l':
                 if (strcmp(optarg, "none") == 0) left_category = RANDOM_NONE;
                 else if (strcmp(optarg, "adjective") == 0) left_category = RANDOM_ADJECTIVE;
@@ -170,11 +170,11 @@ int main(int argc, char** argv) {
 
     if (docker_flag == 0) {
         printf("%s\n", randomname_docker());
-        return 0;
+        exit(EXIT_SUCCESS);
     }
     if (ubuntu_flag == 0) {
         printf("%s\n", randomname_ubuntu(first_char_left));
-        return 0;
+        exit(EXIT_SUCCESS);
     }
 
     char *name = randomname_opts(left_category, middle_category, right_category,
@@ -182,5 +182,5 @@ int main(int argc, char** argv) {
             separator, !no_dashes_flag);
     printf("%s\n", name);
 
-    return 0;
+    exit(EXIT_SUCCESS);
 }
