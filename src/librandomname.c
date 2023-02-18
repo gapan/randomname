@@ -8,6 +8,7 @@
 #include <time.h>
 #include "librandomname.h"
 #include "adjectives.h"
+#include "adjectives_docker.h"
 #include "animals.h"
 #include "colors.h"
 #include "notable_people.h"
@@ -114,6 +115,9 @@ char *randomname_by_category_opts(randomname_category_t c, char first_char, bool
     if (c == RANDOM_ADJECTIVE) {
         len = sizeof(adjectives) / sizeof(adjectives[0]);
         return random_item_opts(adjectives, len, first_char, no_dashes);
+    } else if (c == RANDOM_ADJECTIVE_DOCKER) {
+        len = sizeof(adjectives_docker) / sizeof(adjectives_docker[0]);
+        return random_item_opts(adjectives_docker, len, first_char, no_dashes);
     } else if (c == RANDOM_ANIMAL) {
         len = sizeof(animals) / sizeof(animals[0]);
         return random_item_opts(animals, len, first_char, no_dashes);
@@ -137,7 +141,7 @@ char *randomname_docker() {
      * https://github.com/moby/moby/blob/master/pkg/namesgenerator/names-generator.go
      */
     do {
-        char *left = randomname_by_category_opts(RANDOM_ADJECTIVE, 0, true);
+        char *left = randomname_by_category_opts(RANDOM_ADJECTIVE_DOCKER, 0, true);
         char *right = randomname_by_category_opts(RANDOM_NOTABLE_PERSON, 0, true);
         name = malloc(strlen(left) + strlen(right) + 2);
         sprintf(name, "%s_%s", left, right);
