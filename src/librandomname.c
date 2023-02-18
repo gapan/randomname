@@ -4,13 +4,14 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include <unistd.h>
+#include <time.h>
 #include "librandomname.h"
 #include "adjectives.h"
 #include "animals.h"
 #include "colors.h"
 #include "notable_people.h"
 #include "nouns.h"
-#include "time.h"
 
 static bool randomname_initialized = false;
 
@@ -62,7 +63,7 @@ static char *random_item_opts(char **list, int len, char first_char, bool no_das
 void randomname_init() {
     if (!randomname_initialized) {
         randomname_initialized = true;
-        srand(time(NULL)); // random seed
+        srand(time(NULL) * getpid()); // random seed. Should be random enough
     }
 }
 
