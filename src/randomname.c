@@ -8,7 +8,7 @@
 #include "librandomname.h"
 
 void usage() {
-    fprintf(stdout, "HELP\n");
+    printf("HELP\n");
 }
 
 int main(int argc, char** argv) {
@@ -169,18 +169,18 @@ int main(int argc, char** argv) {
     randomname_init();
 
     if (docker_flag == 0) {
-        fprintf(stdout, "%s\n", randomname_docker());
+        printf("%s\n", randomname_docker());
         return 0;
     }
     if (ubuntu_flag == 0) {
-        fprintf(stdout, "%s\n", randomname_ubuntu(first_char_left));
+        printf("%s\n", randomname_ubuntu(first_char_left));
         return 0;
     }
 
     char *name = randomname_opts(left_category, middle_category, right_category,
             first_char_left, first_char_middle, first_char_right,
             separator, !no_dashes_flag);
-    fprintf(stdout, "%s\n", name);
+    printf("%s\n", name);
 
     return 0;
 }
