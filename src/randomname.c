@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
 #include <getopt.h>
 
 #include "librandomname.h"
@@ -167,10 +166,11 @@ int main(int argc, char** argv) {
         }
     } while (next_opt != -1);
 
-    srand(time(NULL)); // random seed
+    randomname_init();
 
     if (docker_flag == 0) {
         fprintf(stdout, "%s\n", randomname_docker());
+        return 0;
     }
     if (ubuntu_flag == 0) {
         fprintf(stdout, "%s\n", randomname_ubuntu(first_char_left));

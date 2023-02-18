@@ -10,9 +10,13 @@
 #include "colors.h"
 #include "notable_people.h"
 #include "nouns.h"
+#include "time.h"
+
+static bool randomname_initialized = false;
 
 // return random number between min and max (both inclusive)
 static int random_number(int min, int max) {
+    if (!randomname_initialized) return - 1;
     return rand() % (max + 1 - min) + min;
 }
 
@@ -26,6 +30,10 @@ static bool includes_dash(char *s) {
         }
     }
     return found_dash;
+}
+
+static char *random_item(char **list, int len) {
+    return random_item_opts(list, len, 0, false);
 }
 
 static char *random_item_opts(char **list, int len, char first_char, bool no_dashes) {
@@ -51,8 +59,11 @@ static char *random_item_opts(char **list, int len, char first_char, bool no_das
     return list[rand];
 }
 
-static char *random_item(char **list, int len) {
-    return random_item_opts(list, len, 0, false);
+void randomname_init() {
+    if (!randomname_initialized) {
+        randomname_initialized = true;
+        srand(time(NULL)); // random seed
+    }
 }
 
 char *randomname() {

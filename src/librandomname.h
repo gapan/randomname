@@ -11,6 +11,8 @@ typedef enum {
     RANDOM_NOUN
 } randomname_category_t;
 
+void randomname_init();
+
 char *randomname();
 char *randomname_opts(randomname_category_t left_category,
                       randomname_category_t middle_category,
@@ -26,3 +28,7 @@ char *randomname_by_category_opts(randomname_category_t c, char first_char, bool
 
 char *randomname_docker();
 char *randomname_ubuntu(char first_char);
+
+static int random_number(int min, int max);
+static char *random_item(char **list, int len);
+static char *random_item_opts(char **list, int len, char first_char, bool no_dashes);
