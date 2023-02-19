@@ -43,6 +43,22 @@ void usage() {
 
 }
 
+randomname_category_t get_category(char *arg) {
+    if (strcmp(arg, "none") == 0) return RANDOM_NONE;
+    else if (strcmp(arg, "adjective") == 0) return RANDOM_ADJECTIVE;
+    else if (strcmp(arg, "adjective-docker") == 0) return RANDOM_ADJECTIVE_DOCKER;
+    else if (strcmp(arg, "animal") == 0) return RANDOM_ANIMAL;
+    else if (strcmp(arg, "color") == 0) return RANDOM_COLOR;
+    else if (strcmp(arg, "element") == 0) return RANDOM_ELEMENT;
+    else if (strcmp(arg, "noun") == 0) return RANDOM_NOUN;
+    else if (strcmp(arg, "number") == 0) return RANDOM_NUMBER;
+    else if (strcmp(arg, "person") == 0) return RANDOM_NOTABLE_PERSON;
+    else {
+        usage();
+        exit(EXIT_FAILURE);
+    }
+}
+
 int main(int argc, char** argv) {
 
     // flagged (value = 0) if the respective part is enabled
@@ -154,50 +170,13 @@ int main(int argc, char** argv) {
                 usage();
                 exit(EXIT_SUCCESS);
             case 'l':
-                if (strcmp(optarg, "none") == 0) left_category = RANDOM_NONE;
-                else if (strcmp(optarg, "adjective") == 0) left_category = RANDOM_ADJECTIVE;
-                else if (strcmp(optarg, "adjective-docker") == 0) left_category = RANDOM_ADJECTIVE_DOCKER;
-                else if (strcmp(optarg, "animal") == 0) left_category = RANDOM_ANIMAL;
-                else if (strcmp(optarg, "color") == 0) left_category = RANDOM_COLOR;
-                else if (strcmp(optarg, "element") == 0) left_category = RANDOM_ELEMENT;
-                else if (strcmp(optarg, "noun") == 0) left_category = RANDOM_NOUN;
-                else if (strcmp(optarg, "number") == 0) left_category = RANDOM_NUMBER;
-                else if (strcmp(optarg, "person") == 0) left_category = RANDOM_NOTABLE_PERSON;
-                else {
-                    usage();
-                    exit(EXIT_FAILURE);
-                }
+                left_category = get_category(optarg);
                 break;
             case 'm':
-                if (strcmp(optarg, "none") == 0) middle_category = RANDOM_NONE;
-                else if (strcmp(optarg, "adjective") == 0) middle_category = RANDOM_ADJECTIVE;
-                else if (strcmp(optarg, "adjective-docker") == 0) middle_category = RANDOM_ADJECTIVE_DOCKER;
-                else if (strcmp(optarg, "animal") == 0) middle_category = RANDOM_ANIMAL;
-                else if (strcmp(optarg, "color") == 0) middle_category = RANDOM_COLOR;
-                else if (strcmp(optarg, "element") == 0) middle_category = RANDOM_ELEMENT;
-                else if (strcmp(optarg, "noun") == 0) middle_category = RANDOM_NOUN;
-                else if (strcmp(optarg, "number") == 0) middle_category = RANDOM_NUMBER;
-                else if (strcmp(optarg, "person") == 0) middle_category = RANDOM_NOTABLE_PERSON;
-                else {
-                    usage();
-                    exit(EXIT_FAILURE);
-                }
+                middle_category = get_category(optarg);
                 break;
             case 'r':
-                if (strcmp(optarg, "none") == 0) right_category = RANDOM_NONE;
-                else if (strcmp(optarg, "adjective") == 0) right_category = RANDOM_ADJECTIVE;
-                else if (strcmp(optarg, "adjective-docker") == 0) right_category = RANDOM_ADJECTIVE_DOCKER;
-                else if (strcmp(optarg, "animal") == 0) right_category = RANDOM_ANIMAL;
-                else if (strcmp(optarg, "color") == 0) right_category = RANDOM_COLOR;
-                else if (strcmp(optarg, "color") == 0) right_category = RANDOM_COLOR;
-                else if (strcmp(optarg, "element") == 0) right_category = RANDOM_ELEMENT;
-                else if (strcmp(optarg, "noun") == 0) right_category = RANDOM_NOUN;
-                else if (strcmp(optarg, "number") == 0) right_category = RANDOM_NUMBER;
-                else if (strcmp(optarg, "person") == 0) right_category = RANDOM_NOTABLE_PERSON;
-                else {
-                    usage();
-                    exit(EXIT_FAILURE);
-                }
+                right_category = get_category(optarg);
                 break;
             case 's':
                 /* The separator to use */
