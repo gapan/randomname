@@ -17,9 +17,9 @@ void usage() {
     printf("                               See word lists below. Default: none\n");
     printf("  -r, --right=WORDLIST         What to use for the right part of the name.\n");
     printf("                               See word lists below. Default: noun\n");
-    printf("      --left-start=LETTER      The first letter of the left word (a-z).\n");
-    printf("      --middle-start=LETTER    The first letter of the middle word (a-z).\n");
-    printf("      --right-start=LETTER     The first letter of the right word (a-z).\n");
+    printf("      --left-start=LETTER      The 1st letter of the left word (a-z).\n");
+    printf("      --middle-start=LETTER    The 1st letter of the middle word (a-z).\n");
+    printf("      --right-start=LETTER     The 1st letter of the right word (a-z).\n");
     printf("  -s, --separator=SEPARATOR    The separator to use between words. Default: '-'\n");
     printf("                               Place separator inside quotes if it's a special\n");
     printf("                               character that may be interpreted by your shell.\n");
@@ -27,7 +27,7 @@ void usage() {
     printf("      --docker                 Create names like docker containers.\n");
     printf("      --ubuntu[=LETTER]        Create names that sound like Ubuntu releases.\n");
     printf("                               You can optionally specify the 1st letter to use.\n\n");
-    printf("Word list options:\n");
+    printf("Word lists:\n");
     printf("  none                         Do not use this part of the name.\n");
     printf("  adjective                    A list of adjectives.\n");
     printf("  adjective-docker             A smaller list of adjectives as used by docker.\n");
