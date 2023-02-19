@@ -35,6 +35,7 @@ void usage() {
     printf("  color                        A list of colors.\n");
     printf("  element                      A list of periodic table elements.\n");
     printf("  noun                         A list of nouns.\n");
+    printf("  number                       A four-digit number.\n");
     printf("  person                       A list of notable people as used by docker.\n\n");
     printf("Help options:\n");
     printf("  -h, --help                   Show this help message.\n");
@@ -156,6 +157,7 @@ int main(int argc, char** argv) {
                 else if (strcmp(optarg, "color") == 0) left_category = RANDOM_COLOR;
                 else if (strcmp(optarg, "element") == 0) left_category = RANDOM_ELEMENT;
                 else if (strcmp(optarg, "noun") == 0) left_category = RANDOM_NOUN;
+                else if (strcmp(optarg, "number") == 0) left_category = RANDOM_NUMBER;
                 else if (strcmp(optarg, "person") == 0) left_category = RANDOM_NOTABLE_PERSON;
                 else {
                     usage();
@@ -170,6 +172,7 @@ int main(int argc, char** argv) {
                 else if (strcmp(optarg, "color") == 0) middle_category = RANDOM_COLOR;
                 else if (strcmp(optarg, "element") == 0) middle_category = RANDOM_ELEMENT;
                 else if (strcmp(optarg, "noun") == 0) middle_category = RANDOM_NOUN;
+                else if (strcmp(optarg, "number") == 0) middle_category = RANDOM_NUMBER;
                 else if (strcmp(optarg, "person") == 0) middle_category = RANDOM_NOTABLE_PERSON;
                 else {
                     usage();
@@ -185,6 +188,7 @@ int main(int argc, char** argv) {
                 else if (strcmp(optarg, "color") == 0) right_category = RANDOM_COLOR;
                 else if (strcmp(optarg, "element") == 0) right_category = RANDOM_ELEMENT;
                 else if (strcmp(optarg, "noun") == 0) right_category = RANDOM_NOUN;
+                else if (strcmp(optarg, "number") == 0) right_category = RANDOM_NUMBER;
                 else if (strcmp(optarg, "person") == 0) right_category = RANDOM_NOTABLE_PERSON;
                 else {
                     usage();

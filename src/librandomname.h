@@ -10,7 +10,8 @@ typedef enum {
     RANDOM_COLOR,
     RANDOM_ELEMENT,
     RANDOM_NOTABLE_PERSON,
-    RANDOM_NOUN
+    RANDOM_NOUN,
+    RANDOM_NUMBER
 } randomname_category_t;
 
 void randomname_init();
