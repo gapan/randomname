@@ -11,6 +11,7 @@
 #include "adjectives_docker.h"
 #include "animals.h"
 #include "colors.h"
+#include "elements.h"
 #include "notable_people.h"
 #include "nouns.h"
 
@@ -124,6 +125,9 @@ char *randomname_by_category_opts(randomname_category_t c, char first_char, bool
     } else if (c == RANDOM_COLOR) {
         len = sizeof(colors) / sizeof(colors[0]);
         return random_item_opts(colors, len, first_char, no_dashes);
+    } else if (c == RANDOM_ELEMENT) {
+        len = sizeof(elements) / sizeof(elements[0]);
+        return random_item_opts(elements, len, first_char, no_dashes);
     } else if (c == RANDOM_NOTABLE_PERSON) {
         len = sizeof(notable_people) / sizeof(notable_people[0]);
         return random_item_opts(notable_people, len, first_char, no_dashes);

@@ -8,6 +8,7 @@ typedef enum {
     RANDOM_ADJECTIVE_DOCKER,
     RANDOM_ANIMAL,
     RANDOM_COLOR,
+    RANDOM_ELEMENT,
     RANDOM_NOTABLE_PERSON,
     RANDOM_NOUN
 } randomname_category_t;
