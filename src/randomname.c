@@ -122,9 +122,9 @@ int main(int argc, char** argv) {
                 if (strcmp(optarg, "none") == 0) left_category = RANDOM_NONE;
                 else if (strcmp(optarg, "adjective") == 0) left_category = RANDOM_ADJECTIVE;
                 else if (strcmp(optarg, "adjective-docker") == 0) left_category = RANDOM_ADJECTIVE_DOCKER;
+                else if (strcmp(optarg, "animal") == 0) left_category = RANDOM_ANIMAL;
                 else if (strcmp(optarg, "color") == 0) left_category = RANDOM_COLOR;
                 else if (strcmp(optarg, "element") == 0) left_category = RANDOM_ELEMENT;
-                else if (strcmp(optarg, "animal") == 0) left_category = RANDOM_ANIMAL;
                 else if (strcmp(optarg, "noun") == 0) left_category = RANDOM_NOUN;
                 else if (strcmp(optarg, "person") == 0) left_category = RANDOM_NOTABLE_PERSON;
                 else {
@@ -136,9 +136,9 @@ int main(int argc, char** argv) {
                 if (strcmp(optarg, "none") == 0) middle_category = RANDOM_NONE;
                 else if (strcmp(optarg, "adjective") == 0) middle_category = RANDOM_ADJECTIVE;
                 else if (strcmp(optarg, "adjective-docker") == 0) middle_category = RANDOM_ADJECTIVE_DOCKER;
+                else if (strcmp(optarg, "animal") == 0) middle_category = RANDOM_ANIMAL;
                 else if (strcmp(optarg, "color") == 0) middle_category = RANDOM_COLOR;
                 else if (strcmp(optarg, "element") == 0) middle_category = RANDOM_ELEMENT;
-                else if (strcmp(optarg, "animal") == 0) middle_category = RANDOM_ANIMAL;
                 else if (strcmp(optarg, "noun") == 0) middle_category = RANDOM_NOUN;
                 else if (strcmp(optarg, "person") == 0) middle_category = RANDOM_NOTABLE_PERSON;
                 else {
@@ -150,10 +150,10 @@ int main(int argc, char** argv) {
                 if (strcmp(optarg, "none") == 0) right_category = RANDOM_NONE;
                 else if (strcmp(optarg, "adjective") == 0) right_category = RANDOM_ADJECTIVE;
                 else if (strcmp(optarg, "adjective-docker") == 0) right_category = RANDOM_ADJECTIVE_DOCKER;
+                else if (strcmp(optarg, "animal") == 0) right_category = RANDOM_ANIMAL;
                 else if (strcmp(optarg, "color") == 0) right_category = RANDOM_COLOR;
                 else if (strcmp(optarg, "color") == 0) right_category = RANDOM_COLOR;
                 else if (strcmp(optarg, "element") == 0) right_category = RANDOM_ELEMENT;
-                else if (strcmp(optarg, "animal") == 0) right_category = RANDOM_ANIMAL;
                 else if (strcmp(optarg, "noun") == 0) right_category = RANDOM_NOUN;
                 else if (strcmp(optarg, "person") == 0) right_category = RANDOM_NOTABLE_PERSON;
                 else {
