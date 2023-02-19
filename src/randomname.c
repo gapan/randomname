@@ -25,6 +25,7 @@ void usage() {
     printf("                               character that may be interpreted by your shell.\n");
     printf("      --no-dashes              Do not allow words with dashes (e.g. bite-sized).\n");
     printf("      --docker                 Create names like docker containers.\n");
+    printf("      --heroku                 Create names like heroku.\n");
     printf("      --ubuntu[=LETTER]        Create names that sound like Ubuntu releases.\n");
     printf("                               You can optionally specify the 1st letter to use.\n\n");
     printf("Word lists:\n");
@@ -55,8 +56,9 @@ int main(int argc, char** argv) {
     char first_char_right = 0;
 
     // flagged (value = 0) if the respective option is enabled
-    int ubuntu_flag = 1;
     int docker_flag = 1;
+    int heroku_flag = 1;
+    int ubuntu_flag = 1;
     int no_dashes_flag = 1;
 
     randomname_category_t left_category = RANDOM_ADJECTIVE;
@@ -78,6 +80,7 @@ int main(int argc, char** argv) {
         { "middle-start", required_argument, NULL,            0  },
         { "right-start",  required_argument, NULL,            0  },
         { "docker",       no_argument,       &docker_flag,    0  },
+        { "heroku",       no_argument,       &heroku_flag,    0  },
         { "ubuntu",       optional_argument, &ubuntu_flag,    0  },
         { "no-dashes",    no_argument,       &no_dashes_flag, 0  },
         { "separator",    required_argument, NULL,           's' },
@@ -95,6 +98,7 @@ int main(int argc, char** argv) {
                 else if (strcmp(argv[optind-1], "--middle") == 0);
                 else if (strcmp(argv[optind-1], "--right") == 0);
                 else if (strcmp(argv[optind-1], "--docker") == 0);
+                else if (strcmp(argv[optind-1], "--heroku") == 0);
                 else if (strcmp(argv[optind-1], "--no-dashes") == 0);
                 else if (strcmp(argv[optind-1], "--separator") == 0);
                 // handle optional argument for --ubuntu option
@@ -219,6 +223,10 @@ int main(int argc, char** argv) {
 
     if (docker_flag == 0) {
         printf("%s\n", randomname_docker());
+        exit(EXIT_SUCCESS);
+    }
+    if (heroku_flag == 0) {
+        printf("%s\n", randomname_heroku());
         exit(EXIT_SUCCESS);
     }
     if (ubuntu_flag == 0) {

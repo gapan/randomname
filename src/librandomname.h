@@ -30,6 +30,7 @@ char *randomname_by_category(randomname_category_t c);
 char *randomname_by_category_opts(randomname_category_t c, char first_char, bool no_dashes);
 
 char *randomname_docker();
+char *randomname_heroku();
 char *randomname_ubuntu(char first_char);
 
 static int random_number(int min, int max);

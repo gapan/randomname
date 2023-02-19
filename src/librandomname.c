@@ -162,6 +162,15 @@ char *randomname_docker() {
     return name;
 }
 
+char *randomname_heroku() {
+        char *left = randomname_by_category_opts(RANDOM_ADJECTIVE, 0, true);
+        char *middle = randomname_by_category_opts(RANDOM_NOUN, 0, true);
+        char *right = randomname_by_category_opts(RANDOM_NUMBER, 0, true);
+        char *name = malloc(strlen(left) + strlen(middle) + strlen(right) + 3);
+        sprintf(name, "%s-%s-%s", left, middle, right);
+        return name;
+}
+
 char *randomname_ubuntu(char first_char) {
     if (first_char < 'a' || first_char > 'z') {
         first_char = random_number('a', 'z');
