@@ -135,13 +135,9 @@ char *randomname_by_category_opts(randomname_category_t c, char first_char, bool
         len = sizeof(nouns) / sizeof(nouns[0]);
         return random_item_opts(nouns, len, first_char, no_dashes);
     } else if (c == RANDOM_NUMBER) {
-        printf("%");
         int r = random_number(1000, 9999);
-        printf("%");
         char *s = malloc(5);
-        printf("%");
         sprintf(s, "%d", r);
-        printf("%");
         return s;
     }
     return NULL;
