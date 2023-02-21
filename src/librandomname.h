@@ -14,9 +14,13 @@ typedef enum {
     RANDOM_NUMBER
 } randomname_category_t;
 
+/* Make sure you run randomname_init() before anything else! */
 void randomname_init();
 
+/* Returns a name in the form of adjective-noun. */
 char *randomname();
+
+/* Use this if you want to customize the random name more. */
 char *randomname_opts(randomname_category_t left_category,
                       randomname_category_t middle_category,
                       randomname_category_t right_category,
@@ -26,9 +30,14 @@ char *randomname_opts(randomname_category_t left_category,
                       char separator,
                       bool no_dashes);
 
+/* If the above are too restrictive for you, use the following to create names
+ * with any number of parts you like. These return a random word from the
+ * specified category.
+ */
 char *randomname_by_category(randomname_category_t c);
 char *randomname_by_category_opts(randomname_category_t c, char first_char, bool no_dashes);
 
+/* Just some more easy-to-use presets. */
 char *randomname_docker();
 char *randomname_heroku();
 char *randomname_ubuntu(char first_char);
