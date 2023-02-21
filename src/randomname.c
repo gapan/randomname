@@ -61,11 +61,6 @@ randomname_category_t get_category(char *arg) {
 
 int main(int argc, char** argv) {
 
-    // flagged (value = 0) if the respective part is enabled
-    int left_flag = 0;
-    int middle_flag = 1;
-    int right_flag = 0;
-
     // 0 means that names could start with any letter
     char first_char_left = 0;
     char first_char_middle = 0;
