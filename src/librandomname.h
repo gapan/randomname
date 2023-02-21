@@ -33,6 +33,3 @@ char *randomname_docker();
 char *randomname_heroku();
 char *randomname_ubuntu(char first_char);
 
-static int random_number(int min, int max);
-static char *random_item(char **list, int len);
-static char *random_item_opts(char **list, int len, char first_char, bool no_dashes);

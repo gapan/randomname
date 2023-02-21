@@ -17,6 +17,9 @@
 
 static bool randomname_initialized = false;
 
+static int random_number(int min, int max);
+static char *random_item(char **list, int len, char first_char, bool no_dashes);
+
 // return random number between min and max (both inclusive)
 static int random_number(int min, int max) {
     if (!randomname_initialized) return - 1;
@@ -35,11 +38,7 @@ static bool includes_dash(char *s) {
     return found_dash;
 }
 
-static char *random_item(char **list, int len) {
-    return random_item_opts(list, len, 0, false);
-}
-
-static char *random_item_opts(char **list, int len, char first_char, bool no_dashes) {
+static char *random_item(char **list, int len, char first_char, bool no_dashes) {
     int start = 0;
     int end = len - 1;
     bool found_start = false;
@@ -115,25 +114,25 @@ char *randomname_by_category_opts(randomname_category_t c, char first_char, bool
     int len;
     if (c == RANDOM_ADJECTIVE) {
         len = sizeof(adjectives) / sizeof(adjectives[0]);
-        return random_item_opts(adjectives, len, first_char, no_dashes);
+        return random_item(adjectives, len, first_char, no_dashes);
     } else if (c == RANDOM_ADJECTIVE_DOCKER) {
         len = sizeof(adjectives_docker) / sizeof(adjectives_docker[0]);
-        return random_item_opts(adjectives_docker, len, first_char, no_dashes);
+        return random_item(adjectives_docker, len, first_char, no_dashes);
     } else if (c == RANDOM_ANIMAL) {
         len = sizeof(animals) / sizeof(animals[0]);
-        return random_item_opts(animals, len, first_char, no_dashes);
+        return random_item(animals, len, first_char, no_dashes);
     } else if (c == RANDOM_COLOR) {
         len = sizeof(colors) / sizeof(colors[0]);
-        return random_item_opts(colors, len, first_char, no_dashes);
+        return random_item(colors, len, first_char, no_dashes);
     } else if (c == RANDOM_ELEMENT) {
         len = sizeof(elements) / sizeof(elements[0]);
-        return random_item_opts(elements, len, first_char, no_dashes);
+        return random_item(elements, len, first_char, no_dashes);
     } else if (c == RANDOM_NOTABLE_PERSON) {
         len = sizeof(notable_people) / sizeof(notable_people[0]);
-        return random_item_opts(notable_people, len, first_char, no_dashes);
+        return random_item(notable_people, len, first_char, no_dashes);
     } else if (c == RANDOM_NOUN) {
         len = sizeof(nouns) / sizeof(nouns[0]);
-        return random_item_opts(nouns, len, first_char, no_dashes);
+        return random_item(nouns, len, first_char, no_dashes);
     } else if (c == RANDOM_NUMBER) {
         int r = random_number(1000, 9999);
         char *s = malloc(5);
