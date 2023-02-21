@@ -97,6 +97,7 @@ installation. You can use something like the following from the
 top-level directory of the source code:
 
 ```
+mkdir build
 meson setup build
 meson compile -C build
 meson install -C build
